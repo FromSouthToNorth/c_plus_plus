@@ -80,8 +80,75 @@ namespace array_list {
       }
       isSorted = true;
     }
+
+    void insert(const uint64_t &val) {
+      if (top == 49) {
+        std::cout << "\nOverflow";
+        return;
+      }
+      if (!isSorted) {
+        data[top] = val;
+        top++;
+      } 
+      else {
+        uint64_t pos = 0;
+        for (uint64_t i = 0; i < top - 1; i++) {
+          if (data[i] <= val && val <= data[i + 1]) {
+            pos = i + 1;
+            break;
+          }
+        }
+        if (pos == 0) {
+          pos = top - 1;
+        }
+        for (uint64_t i = top; i > pos; i--) {
+          data[i] = data[i - 1];
+        }
+        top++;
+        data[pos] = val;
+      }
+    }
+    void remove(const uint64_t &val) {
+      uint64_t pos = search(val);
+      if (pos == -1) {
+        std::cout << "\n Element does not present in the list";
+        return;
+      }
+      std::cout << "\n" << data[pos] << " deleted";
+      for (uint64_t i = pos; i < top; i++) {
+        data[i] = data[i + 1];
+      }
+      top--;
+    }
+    void show() {
+      std::cout << "\n";
+      for (uint64_t i = 0; i < top; i++) {
+        std::cout << data[i] << " ";
+      }
+    }
   };
-  
 }
   
+}
+
+static void test() {
+  data_structures::array_list::list L;
+  L.insert(1);
+  L.insert(2);
+  L.insert(3);
+  L.insert(4);
+  L.insert(3);
+  L.insert(3);
+  L.insert(5);
+  L.show();
+  
+  L.remove(3);
+  L.show();
+  L.sort();
+  L.show();
+}
+
+int main() {
+  test();
+  return 0;
 }
