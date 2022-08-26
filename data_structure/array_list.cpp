@@ -1,6 +1,5 @@
 #include <array>
 #include <iostream>
-#include <cassert>
 
 namespace data_structures {
 
